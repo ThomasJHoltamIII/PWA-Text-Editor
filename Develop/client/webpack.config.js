@@ -2,13 +2,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
 const { InjectManifest } = require('workbox-webpack-plugin');
+// const index = require(`../client/src/images/logo.png`)
 
 module.exports = () => {
   return {
     mode: 'development',
     entry: {
-      main: './src/js/index.js',
-      install: './src/js/install.js'
+      main: '../client/src/js/index',
+      install: '../client/src/js/index'
     },
     output: {
       filename: '[name].bundle.js',
@@ -16,11 +17,11 @@ module.exports = () => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: './index.html', 
+        template: '../client/index.html', 
         title: 'PWA Text Editor',
       }),
       new InjectManifest({
-        swSrc: './src-sw.js', 
+        swSrc: '../client/src-sw', 
         swDest: 'service-worker.js',
       }),
       new WebpackPwaManifest({
@@ -29,10 +30,13 @@ module.exports = () => {
         description: 'Text Editor',
         background_color: '#000',
         crossorigin: '', 
+        start_url: "./",
+        publicPath: "./",
         icons: [
           {
-            src: path.resolve('./src/images/logo.png'),
+            src: path.resolve('../client/src/images/logo.png'),
             sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join('assets', 'icons'),
           },
         ],
       }),
@@ -41,16 +45,17 @@ module.exports = () => {
     module: {
       rules: [
         {
-          test: /\.css$/,
+          test: /\.css$/i,
           use: ['style-loader', 'css-loader'],
         },
         {
-          test: /\.js$/,
+          test: /\.m?js$/,
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env'],
+              plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/transform-runtime'],
             },
           },
         },
