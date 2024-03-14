@@ -2,14 +2,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
 const { InjectManifest } = require('workbox-webpack-plugin');
-// const index = require(`../client/src/images/logo.png`)
+// const index = require(`../client/src/js/install`)
 
 module.exports = () => {
   return {
     mode: 'development',
     entry: {
-      main: '../client/src/js/index',
-      install: '../client/src/js/index'
+      main: './src/js/index.js',
+      install: './src/js/install.js'
     },
     output: {
       filename: '[name].bundle.js',
@@ -17,12 +17,12 @@ module.exports = () => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: '../client/index.html', 
+        template: './index.html', 
         title: 'PWA Text Editor',
       }),
       new InjectManifest({
-        swSrc: '../client/src-sw', 
-        swDest: 'service-worker.js',
+        swSrc: './src-sw', 
+        swDest: 'src-sw.js',
       }),
       new WebpackPwaManifest({
         name: 'PWA-Text_Editor',
@@ -30,11 +30,13 @@ module.exports = () => {
         description: 'Text Editor',
         background_color: '#000',
         crossorigin: '', 
+        fingerprints: false,
+        inject: true,
         start_url: "./",
         publicPath: "./",
         icons: [
           {
-            src: path.resolve('../client/src/images/logo.png'),
+            src: path.resolve('./src/images/logo.png'),
             sizes: [96, 128, 192, 256, 384, 512],
             destination: path.join('assets', 'icons'),
           },
