@@ -21,7 +21,7 @@ module.exports = () => {
         title: 'PWA Text Editor',
       }),
       new InjectManifest({
-        swSrc: './src-sw', 
+        swSrc: './src-sw.js', 
         swDest: 'src-sw.js',
       }),
       new WebpackPwaManifest({
@@ -36,7 +36,7 @@ module.exports = () => {
         publicPath: "./",
         icons: [
           {
-            src: path.resolve('./src/images/logo.png'),
+            src: path.resolve('../client/src/images/logo.png'),
             sizes: [96, 128, 192, 256, 384, 512],
             destination: path.join('assets', 'icons'),
           },
