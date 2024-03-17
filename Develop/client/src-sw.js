@@ -26,7 +26,7 @@ warmStrategyCache({
 
 registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
-// TODO: Implement asset caching
+// Caches data if it is a stlye,script or worker and if the response is a 0 or 200 "ok"
 registerRoute(
 
   ({request}) => [ 'style', 'script', 'worker' ].includes(request.destination),
